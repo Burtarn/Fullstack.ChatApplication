@@ -1,13 +1,33 @@
+// utils/swagger.js
+import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import YAML from 'yamljs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 
+const options = {
+    definition: {
+    openapi: '3.0.0',
+    info: {
+        title: 'Ditt API',
+        version: '1.0.0',
+        description: 'API-dokumentation',
+    },
+    servers: [
+        {
+        url: 'http://localhost:5000',
+        },
+    ],
+    components: {
+        securitySchemes: {
+            bearerAuth: {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT',
+            },
+        },
+        },
+    },
+  apis: ['./routes/*.js'], // justera om dina routes ligger någon annanstans
+};
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const swaggerDocument = YAML.load(path.join(__dirname, '../docs/swagger.yaml'));
+const swaggerDocument = swaggerJsdoc(options);
 
 export { swaggerUi, swaggerDocument };

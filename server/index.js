@@ -6,10 +6,14 @@ import errorMiddleware from './middleware/errorMiddleware.js';
 import { logger, httpLogger } from './utils/Logger.js';
 import { swaggerUi, swaggerDocument } from './utils/swagger.js';
 import { generalLimiter, loginLimiter } from './middleware/rateLimiter.js';
+import pool from './db.js'; // Importera databasanslutningen
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+console.log("Testar databasanslutning...");
+console.log(pool); // Logga pool-objektet
 
 app.use(generalLimiter);
 app.use(cors());
