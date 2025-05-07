@@ -2,7 +2,7 @@ import express from 'express';
 import { register, login } from '../controllers/authController.js';
 import { registerSchema, loginSchema } from '../validators/authValidator.js';
 import validate from '../middleware/validate.js';
-import { authenticateJWT } from '../middleware/authMiddleware.js'; // För JWT-skyddade rutter
+import { authenticateJWT } from '../middleware/authMiddleware.js'; 
 
 const router = express.Router();
 

@@ -1,0 +1,186 @@
+openapi: 3.0.0
+info:
+  title: Chat API
+  version: 1.0.0
+  description: API för chattfunktionalitet med konversationer, meddelanden, reaktioner och bilagor.
+
+paths:
+  /conversations:
+    get:
+      summary: Hämta alla konversationer för inloggad användare
+      responses:
+        '200':
+          description: Lyckad förfrågan
+    post:
+      summary: Skapa en ny konversation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                is_group:
+                  type: boolean
+                participants:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        '201':
+          description: Konversation skapad
+
+  /conversations/{id}:
+    get:
+      summary: Hämta en specifik konversation
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Konversationen returneras
+
+  /conversations/{id}/participants:
+    post:
+      summary: Lägg till deltagare i en konversation
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+      responses:
+        '201':
+          description: Deltagare tillagd
+
+  /conversations/{id}/messages:
+    get:
+      summary: Hämta alla meddelanden i en konversation
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Lista med meddelanden
+    post:
+      summary: Skicka ett meddelande i en konversation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+      responses:
+        '201':
+          description: Meddelande skickat
+
+  /messages/{id}:
+    patch:
+      summary: Uppdatera ett meddelande
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+      responses:
+        '200':
+          description: Meddelande uppdaterat
+    delete:
+      summary: Ta bort ett meddelande
+      responses:
+        '204':
+          description: Meddelande borttaget
+
+  /messages/{id}/reactions:
+    post:
+      summary: Lägg till en reaktion på ett meddelande
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reaction:
+                  type: string
+      responses:
+        '201':
+          description: Reaktion tillagd
+    delete:
+      summary: Ta bort en reaktion från ett meddelande
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reaction:
+                  type: string
+      responses:
+        '204':
+          description: Reaktion borttagen
+
+  /messages/{id}/attachments:
+    post:
+      summary: Ladda upp en bilaga till ett meddelande
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Bilaga uppladdad
+
+  /attachments/{id}:
+    get:
+      summary: Hämta en bilaga med ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Filen returneras
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []
