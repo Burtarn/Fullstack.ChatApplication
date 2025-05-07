@@ -21,13 +21,13 @@ const PORT = process.env.PORT || 5000;
 
 console.log(pool); 
 
-// Middleware
+//! Middleware
 app.use(generalLimiter);
 app.use(cors());
 app.use(express.json());
 app.use(httpLogger);
 
-// Routes
+//! Routes
 app.use('/api/auth', authRoutes, loginLimiter); 
 app.use('/posts', postsRouter);
 app.use('/comments', commentRouter);
@@ -38,10 +38,10 @@ app.use('/api/messages', messagesRoutes);
 app.use('/api/reactions', reactionsRoutes);
 app.use('/api/attachments', attachmentsRoutes);
 
-// Error handler
+//! Error handler
 app.use(errorMiddleware);
 
-// Server start
+//! Server start
 app.listen(PORT, () => {
     logger.info(`Server running on http://localhost:${PORT}`);
 });
