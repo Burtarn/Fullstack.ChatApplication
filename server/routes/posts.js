@@ -1,6 +1,8 @@
 import express from 'express';
 import pool from '../db.js';
 import authenticateJWT from '../middleware/authMiddleware.js';
+import validate from '../middleware/validate.js';
+import { postSchema } from '../validators/postValidator.js';
 
 
 const router = express.Router();
@@ -116,7 +118,7 @@ router.get('/', async (req, res) => {
  *       500:
  *         description: Serverfel
  */
-router.post('/', authenticateJWT, async (req, res) => {
+router.post('/', authenticateJWT, validate(postSchema), async (req, res) => {
     const { title, content } = req.body;
     const userId = req.user.id;
 

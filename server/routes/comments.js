@@ -1,6 +1,8 @@
 import express from 'express';
 import pool from '../db.js';
 import authenticateJWT from '../middleware/authMiddleware.js';
+import validate from '../middleware/validate.js';
+import { commentSchema, commentDeleteSchema } from '../validators/commentValidator.js';
 
 const router = express.Router();
 
@@ -94,7 +96,7 @@ router.get('/', async (req, res) => {
  *       500:
  *         description: Serverfel
  */
-router.post('/', authenticateJWT, async (req, res) => {
+router.post('/', authenticateJWT, validate(commentSchema), async (req, res) => {
     const { postId, content } = req.body;
     const userId = req.user.id;
 
@@ -199,7 +201,7 @@ router.get('/post/:postId', async (req, res) => {
  *       500:
  *         description: Serverfel
  */
-router.delete('/:commentId', authenticateJWT, async (req, res) => {
+router.delete('/:commentId', authenticateJWT, validate(commentDeleteSchema), async (req, res) => {
     const { commentId } = req.params;
     const userId = req.user.id;
 
