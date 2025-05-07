@@ -1,4 +1,3 @@
-
 import jwt from 'jsonwebtoken';
 
 export const authenticateJWT = (req, res, next) => {
@@ -11,3 +10,4 @@ export const authenticateJWT = (req, res, next) => {
     next();
     });
 };
+export default authenticateJWT;
