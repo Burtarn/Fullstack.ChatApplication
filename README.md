@@ -1,2 +1,5 @@
-Boilerplate React, vite, node och express.
+Fullstack chattapplikation under byggnation <-
 
+PostGRE 
+Express & Node
+React
