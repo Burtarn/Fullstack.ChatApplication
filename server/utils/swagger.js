@@ -1,4 +1,3 @@
-// utils/swagger.js
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 
@@ -25,7 +24,7 @@ const options = {
       },
     },
   },
-  apis: ['./routes/*.js'], // Justera om dina routes ligger på annan plats
+  apis: ['./routes/*.js'], 
 };
 
 const swaggerDocument = swaggerJsdoc(options);
