@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 async function main() {
     try {
         const saltRounds = 10;
-        const password = 'mittsuperlösenord';
+        const password = 'hej123123';
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
         const newUser = await createUser('Eriko', hashedPassword);

@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-// Thunks för att hämta och lägga till kommentarer
 export const fetchComments = createAsyncThunk(
   'comments/fetchComments',
   async () => {
@@ -29,14 +28,13 @@ export const addComment = createAsyncThunk(
   }
 );
 
-// Initial state för kommentarer
 const initialState = {
   comments: [],
-  status: 'idle',  // 'loading', 'succeeded', 'failed'
+  status: 'idle',  
   error: null,
 };
 
-// Slice för kommentarer
+
 const commentsSlice = createSlice({
   name: 'comments',
   initialState,
@@ -55,7 +53,7 @@ const commentsSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(addComment.fulfilled, (state, action) => {
-        state.comments.push(action.payload); // Lägg till den nya kommentaren
+        state.comments.push(action.payload); 
       });
   },
 });

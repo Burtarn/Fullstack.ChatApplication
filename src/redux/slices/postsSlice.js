@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-// Async thunk för att hämta inlägg
+
     export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
     const response = await fetch('http://localhost:3000/posts');
     const data = await response.json();
@@ -11,7 +11,7 @@ const postsSlice = createSlice({
     name: 'posts',
     initialState: {
         posts: [],
-        status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
+        status: 'idle', 
         error: null,
     },
     reducers: {},
