@@ -177,4 +177,52 @@ router.delete('/:postId', authenticateJWT, async (req, res) => {
     }
 });
 
+
+router.get('/:postId', async (req, res) => {
+    const { postId } = req.params;
+
+    try {
+
+        const postResult = await pool.query(`
+            SELECT 
+                posts.id AS post_id,
+                posts.title,
+                posts.content,
+                posts.created_at,
+                users.username
+            FROM posts
+            JOIN users ON posts.user_id = users.id
+            WHERE posts.id = $1
+        `, [postId]);
+
+        if (postResult.rows.length === 0) {
+            return res.status(404).json({ message: 'Inlägget hittades inte.' });
+        }
+
+        const post = postResult.rows[0];
+
+
+        const commentsResult = await pool.query(`
+            SELECT 
+                comments.id,
+                comments.content,
+                comments.post_id,
+                comments.created_at,
+                users.username
+            FROM comments
+            JOIN users ON comments.user_id = users.id
+            WHERE comments.post_id = $1
+            ORDER BY comments.created_at ASC
+        `, [postId]);
+
+        const comments = commentsResult.rows;
+
+
+        res.json({ ...post, comments });
+    } catch (err) {
+        console.error('Fel vid hämtning av inlägg och kommentarer:', err);
+        res.status(500).send('Serverfel');
+    }
+});
+
 export default router;

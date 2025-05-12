@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';  // För att hämta postId från URL
+import { useParams } from 'react-router-dom';  
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchComments, addComment } from '../../redux/slices/commentsSlice'; 
 import AddComment from '../addComment/AddComment';
 
 const Post = () => {
-  const { postId } = useParams(); // Hämta postId från URL
+  const { postId } = useParams(); 
   const dispatch = useDispatch();
   const { comments } = useSelector((state) => state.comments);
 
@@ -43,6 +43,7 @@ const Post = () => {
     }
   };
 
+  // Filtrera kommentarer för det specifika inlägget
   const postComments = comments.filter(comment => comment.post_id === parseInt(postId));
 
   if (loadingPost) return <p>Laddar inlägg...</p>;
@@ -57,14 +58,18 @@ const Post = () => {
 
       <div>
         <h3>Kommentarer</h3>
-        <ul>
-          {postComments.map((comment) => (
-            <li key={comment.id}>
-              <p><strong>{comment.username}</strong> ({new Date(comment.created_at).toLocaleString()})</p>
-              <p>{comment.content}</p>
-            </li>
-          ))}
-        </ul>
+        {postComments.length === 0 ? (
+          <p>Det finns inga kommentarer än.</p>
+        ) : (
+          <ul>
+            {postComments.map((comment) => (
+              <li key={comment.id}>
+                <p><strong>{comment.username}</strong> ({new Date(comment.created_at).toLocaleString()})</p>
+                <p>{comment.content}</p>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       <AddComment onAddComment={handleAddComment} />
