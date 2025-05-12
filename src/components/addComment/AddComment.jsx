@@ -7,7 +7,7 @@ const AddComment = ({ onAddComment }) => {
         e.preventDefault();
         if (content.trim()) {
         onAddComment(content);
-        setContent(''); // Rensa formuläret
+        setContent(''); 
         }
     };
 

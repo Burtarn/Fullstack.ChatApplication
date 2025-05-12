@@ -42,8 +42,6 @@ const Post = () => {
       console.error('Fel vid skapande av kommentar:', err.message);
     }
   };
-
-  // Filtrera kommentarer för det specifika inlägget
   const postComments = comments.filter(comment => comment.post_id === parseInt(postId));
 
   if (loadingPost) return <p>Laddar inlägg...</p>;
