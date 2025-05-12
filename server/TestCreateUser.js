@@ -7,7 +7,7 @@ async function main() {
         const password = 'mittsuperlösenord';
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-        const newUser = await createUser('användarnamn123', hashedPassword);
+        const newUser = await createUser('Eriko', hashedPassword);
         console.log('Användare skapad:', newUser);
     } catch (error) {
         console.error('Fel:', error);
